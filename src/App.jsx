@@ -142,13 +142,15 @@ function App() {
             type="text"
             value={inputValue}
             onChange={({ target }) => {
-              setInputValue(target.value.trim());
+              setInputValue(Number(target.value.trim()));
+              console.log(inputValue);
               // checkInputLength(target.value);
               numberLimit(target.value);
               checkingInputError(target.value);
               // setInputError(false);
+              // trimFirstZero();
             }}
-            autoFocus="true"
+            autoFocus
             placeholder="Enter a number between 1 - 100"
           />
 
@@ -161,8 +163,6 @@ function App() {
             onClick={(event) => {
               event.preventDefault();
               setNumbers(inputValue);
-              selectText();
-              console.log(firstInputValue);
             }}
             disabled={isBtnDisabled}
           >
