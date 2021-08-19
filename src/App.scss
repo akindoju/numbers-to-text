@@ -1,0 +1,134 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  /* 16px is browser default */
+  font-size: 62.5%; /* 1rem = 10px; 10px/16px = 62.5% */
+}
+
+body {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2881b4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6fa4d5;
+}
+
+::selection {
+  background-color: #2881b4;
+  color: white;
+}
+
+.app {
+  background-color: #fcfcfc;
+  height: 100vh;
+}
+
+.header {
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(#55c57a, 0.8),
+    rgba(#7ed56f, 0.8)
+  );
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10rem;
+
+  &__components {
+    display: flex;
+    justify-content: center;
+
+    input {
+      width: 50%;
+      padding: 1rem;
+      border: 1px solid rgb(32, 189, 32);
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+
+      &:focus {
+        outline: none;
+        border: 2px solid rgb(32, 189, 32);
+      }
+    }
+
+    &__btn {
+      width: 10%;
+      cursor: pointer;
+      border-top-right-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      border: none;
+      background-color: rgb(18, 129, 18);
+      color: white;
+
+      &:active {
+        outline: none;
+        transform: scale(0.98);
+      }
+    }
+
+    &__btn.active {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  p {
+    text-align: center;
+    color: red;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+}
+
+.result {
+  padding: 6rem 12rem;
+  font-family: "Montserrat", sans-serif;
+
+  &__details {
+    display: flex;
+    width: 50%;
+
+    h1 {
+      margin-bottom: 2rem;
+      margin-right: 5rem;
+
+      span {
+        margin-left: 2rem;
+        color: green;
+      }
+    }
+
+    svg {
+      cursor: pointer;
+      transition: all 0.2s;
+      justify-self: flex-end;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}
