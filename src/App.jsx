@@ -36,6 +36,10 @@ function App() {
   //inputValue was converted to number on change, so convert to string to length
   const inputValueLength = inputValue.toString().length;
   const firstInputValue = inputValue[0];
+  let spellingPartOne;
+  let spellingPartTwo;
+  let spellingPartThree;
+  let spellingPartFour;
 
   // useEffect(() => {
   //   if (
@@ -145,16 +149,21 @@ function App() {
 
       const inputTens = inputValue
         .toString()
-        .substring(inputValueLength, inputValueLength - 2);
+        .substring(inputValueLength - 1, inputValueLength - 2);
 
-      if (inputValueLength > 2) {
-        const inputHundred = inputValue
-          .toString()
-          .substring(inputValueLength, inputValueLength - 3);
-      }
+      // if (inputValueLength > 2) {
+      //   const inputHundred = inputValue
+      //     .toString()
+      //     .substring(inputValueLength - 2, inputValueLength - 3);
+      // }
 
       const tensTester = inputTens + inputUnit;
       if (tensTester < 21) {
+        setNumbers(inputValue);
+      } else {
+        spellingPartFour = langObj[inputUnit].english;
+        spellingPartThree = langObj[inputTens + 0].english;
+        setEnglishNumber(`${spellingPartThree} ${spellingPartFour}`);
       }
     }
   };
