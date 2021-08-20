@@ -33,22 +33,27 @@ function App() {
   const [hausaNumber, setHausaNumber] = useState("");
   const [yorubaNumber, setYorubaNumber] = useState("");
 
-  useEffect(() => {
-    if (
-      inputValue.length < 1 ||
-      isNaN(inputValue) ||
-      inputValue > 100 ||
-      inputValue < 0
-    ) {
-      setIsBtnDisabled(true);
-    } else {
-      setIsBtnDisabled(false);
-    }
-  }, [inputValue]);
+  //inputValue was converted to number on change, so convert to string to length
+  const inputValueLength = inputValue.toString().length;
+  const firstInputValue = inputValue[0];
+
+  // useEffect(() => {
+  //   if (
+  //     inputValue.length < 1 ||
+  //     isNaN(inputValue) ||
+  //     inputValue > 100 ||
+  //     inputValue < 0
+  //   ) {
+  //     setIsBtnDisabled(true);
+  //   } else {
+  //     setIsBtnDisabled(false);
+  //   }
+  // }, [inputValue]);
 
   const checkingInputError = (target) => {
     if (isNaN(target)) {
       setInputError(true);
+      selectText();
       // setIsBtnDisabled(true);
     } else {
       setInputError(false);
@@ -62,15 +67,15 @@ function App() {
     setYorubaNumber(langObj[input].yoruba);
   };
 
-  const numberLimit = (input) => {
-    if (input > 100 || input < 0) {
-      setLimitError(true);
-      setIsBtnDisabled(true);
-    } else {
-      setLimitError(false);
-      setIsBtnDisabled(false);
-    }
-  };
+  // const numberLimit = (input) => {
+  //   if (input > 100 || input < 0) {
+  //     setLimitError(true);
+  //     setIsBtnDisabled(true);
+  //   } else {
+  //     setLimitError(false);
+  //     setIsBtnDisabled(false);
+  //   }
+  // };
 
   const playSound = (source) => {
     const sound = new Howl({ src: [source] });
@@ -130,8 +135,29 @@ function App() {
     input.select();
   };
 
-  const inputValueLength = inputValue.length;
-  const firstInputValue = inputValue[0];
+  const spellNumbers = (target) => {
+    if (target <= 20) {
+      setNumbers(inputValue);
+    } else {
+      const inputUnit = inputValue
+        .toString()
+        .substring(inputValueLength, inputValueLength - 1);
+
+      const inputTens = inputValue
+        .toString()
+        .substring(inputValueLength, inputValueLength - 2);
+
+      if (inputValueLength > 2) {
+        const inputHundred = inputValue
+          .toString()
+          .substring(inputValueLength, inputValueLength - 3);
+      }
+
+      const tensTester = inputTens + inputUnit;
+      if (tensTester < 21) {
+      }
+    }
+  };
 
   return (
     <div className="app">
@@ -143,28 +169,28 @@ function App() {
             value={inputValue}
             onChange={({ target }) => {
               setInputValue(Number(target.value.trim()));
-              console.log(inputValue);
               // checkInputLength(target.value);
-              numberLimit(target.value);
+              // numberLimit(target.value);
               checkingInputError(target.value);
               // setInputError(false);
-              // trimFirstZero();
             }}
             autoFocus
             placeholder="Enter a number between 1 - 100"
           />
 
           <button
-            className={
-              isBtnDisabled
-                ? "header__components__btn active"
-                : "header__components__btn"
-            }
+            // className={
+            //   isBtnDisabled
+            //     ? "header__components__btn active"
+            //     : "header__components__btn"
+            // }
+            className="header__components__btn"
             onClick={(event) => {
               event.preventDefault();
-              setNumbers(inputValue);
+              spellNumbers(inputValue);
+              selectText();
             }}
-            disabled={isBtnDisabled}
+            // disabled={isBtnDisabled}
           >
             Go
           </button>
