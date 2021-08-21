@@ -41,12 +41,14 @@ function App() {
   let inputHundred = "";
   let inputThousand = "";
   let inputTenThousand = "";
+  let inputHundredThousand = "";
 
   let spellingPartUnit = "";
   let spellingPartTens = "";
   let spellingPartHundred = "";
   let spellingPartThousand = "";
   let spellingPartTenThousand = "";
+  let spellingPartHundredThousand = "";
 
   // useEffect(() => {
   //   if (
@@ -176,6 +178,12 @@ function App() {
           .substring(inputValueLength - 4, inputValueLength - 5);
       }
 
+      if (inputValueLength > 4) {
+        inputHundredThousand = inputValue
+          .toString()
+          .substring(inputValueLength - 5, inputValueLength - 6);
+      }
+
       const tensChecker = Number(inputTens + inputUnit);
 
       if (tensChecker < 21) {
@@ -186,14 +194,17 @@ function App() {
       }
 
       if (inputHundred > 0) {
-        spellingPartHundred =
-          langObj[Number(inputHundred)].english + " Hundred and";
-        console.log(inputUnit);
+        if (Number(inputTens) < 1 && Number(inputUnit) < 1) {
+          spellingPartHundred =
+            langObj[Number(inputHundred)].english + " Hundred";
+        } else
+          spellingPartHundred =
+            langObj[Number(inputHundred)].english + " Hundred and";
       }
 
       if (inputThousand > 0) {
         spellingPartThousand =
-          langObj[Number(inputThousand)].english + " Thousand,";
+          langObj[Number(inputThousand)].english + " Thousand";
       }
 
       if (inputTenThousand > 0) {
@@ -214,12 +225,21 @@ function App() {
         }
       }
 
-      if (Number(inputUnit) < 1 && Number(inputTens) < 1) {
+      // if (inputHundredThousand > 0) {
+      //   spellingPartHundredThousand =
+      //     langObj[Number(inputHundredThousand)].english + " Hundred Thousand";
+      // }
+
+      // if (Number(inputUnit) < 1 && tensChecker > 21) {
+      //   spellingPartUnit = "";
+      // }
+
+      if (spellingPartUnit === "Zero") {
         spellingPartUnit = "";
       }
 
       setEnglishNumber(
-        `${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
+        ` ${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
       );
     }
   };
