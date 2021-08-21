@@ -39,12 +39,14 @@ function App() {
   let inputUnit = "";
   let inputTens = "";
   let inputHundred = "";
+  let inputThousand = "";
+  let inputTenThousand = "";
+
   let spellingPartUnit = "";
   let spellingPartTens = "";
   let spellingPartHundred = "";
-  // const inputThousand = inputValue
-  //   .toString()
-  //   .substring(inputValueLength - 3, inputValueLength - 4);
+  let spellingPartThousand = "";
+  let spellingPartTenThousand = "";
 
   // useEffect(() => {
   //   if (
@@ -162,6 +164,18 @@ function App() {
           .substring(inputValueLength - 2, inputValueLength - 3);
       }
 
+      if (inputValueLength > 3) {
+        inputThousand = inputValue
+          .toString()
+          .substring(inputValueLength - 3, inputValueLength - 4);
+      }
+
+      if (inputValueLength > 4) {
+        inputTenThousand = inputValue
+          .toString()
+          .substring(inputValueLength - 4, inputValueLength - 5);
+      }
+
       const tensChecker = Number(inputTens + inputUnit);
 
       if (tensChecker < 21) {
@@ -176,12 +190,32 @@ function App() {
           langObj[Number(inputHundred)].english + " Hundred and";
       }
 
+      if (inputThousand > 0) {
+        spellingPartThousand =
+          langObj[Number(inputThousand)].english + " Thousand,";
+      }
+
+      if (inputTenThousand > 0) {
+        const tenThousandChecker = Number(inputTenThousand + inputThousand);
+
+        if (tenThousandChecker < 21) {
+          spellingPartTenThousand =
+            langObj[tenThousandChecker].english + " Thousand,";
+          spellingPartThousand = "";
+        } else {
+          spellingPartTenThousand =
+            langObj[Number(inputTenThousand + 0)].english + " Thousand";
+        }
+      }
+
+      if (Number(inputUnit) === 0) {
+        spellingPartUnit = "";
+      }
+
       setEnglishNumber(
-        `${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
+        `${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
       );
     }
-
-    // resetValues();
   };
 
   return (
