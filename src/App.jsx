@@ -33,13 +33,26 @@ function App() {
   const [hausaNumber, setHausaNumber] = useState("");
   const [yorubaNumber, setYorubaNumber] = useState("");
 
+  // const [spellingPartUnit, setSpellingPartUnit] = useState("");
+  // const [spellingPartTens, setSpellingPartTens] = useState("");
+  // const [spellingPartHundred, setSpellingPartHundred] = useState("");
+  // const [spellingPartThousand, setSpellingPartThousand] = useState("");
+  // const [inputUnit, setInputUnit] = useState("");
+  // const [inputTens, setInputTens] = useState("");
+  // const [inputHundred, setInputHundred] = useState("");
+  // const [inputThousand, setInputThousand] = useState("");
+
   //inputValue was converted to number on change, so convert to string to length
   const inputValueLength = inputValue.toString().length;
-  const firstInputValue = inputValue[0];
-  let spellingPartOne;
-  let spellingPartTwo;
-  let spellingPartThree;
-  let spellingPartFour;
+  let inputUnit;
+  let inputTens;
+  let inputHundred;
+  let spellingPartUnit;
+  let spellingPartTens;
+  let spellingPartHundred;
+  // const inputThousand = inputValue
+  //   .toString()
+  //   .substring(inputValueLength - 3, inputValueLength - 4);
 
   // useEffect(() => {
   //   if (
@@ -65,11 +78,11 @@ function App() {
     }
   };
 
-  const setNumbers = (input) => {
-    setEnglishNumber(langObj[input].english);
-    setHausaNumber(langObj[input].hausa);
-    setYorubaNumber(langObj[input].yoruba);
-  };
+  // const setNumbers = (input) => {
+  //   setEnglishNumber(langObj[input].english);
+  //   setHausaNumber(langObj[input].hausa);
+  //   setYorubaNumber(langObj[input].yoruba);
+  // };
 
   // const numberLimit = (input) => {
   //   if (input > 100 || input < 0) {
@@ -139,33 +152,67 @@ function App() {
     input.select();
   };
 
+  // const spellNumbers = (target) => {
+  //   console.log(target);
+  //   if (target <= 20) {
+  //     setEnglishNumber(langObj[target].english);
+  //   } else {
+
+  //     if (tensTester < 21) {
+  //       setSpellingPartUnit(langObj[tensTester].english);
+  //     } else {
+  //       setSpellingPartUnit(langObj[inputUnit].english);
+  //       setSpellingPartTens(langObj[inputTens + 0].english);
+  //     }
+
+  //     if (inputHundred > 0) {
+  //       setSpellingPartHundred(`${langObj[inputHundred].english} Hundred and`);
+  //     }
+  //   }
+
+  //   setEnglishNumber(
+  //     `${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
+  //   );
+  // };
+
   const spellNumbers = (target) => {
     if (target <= 20) {
-      setNumbers(inputValue);
+      setEnglishNumber(langObj[target].english);
     } else {
-      const inputUnit = inputValue
+      inputUnit = inputValue
         .toString()
         .substring(inputValueLength, inputValueLength - 1);
 
-      const inputTens = inputValue
+      inputTens = inputValue
         .toString()
         .substring(inputValueLength - 1, inputValueLength - 2);
 
-      // if (inputValueLength > 2) {
-      //   const inputHundred = inputValue
-      //     .toString()
-      //     .substring(inputValueLength - 2, inputValueLength - 3);
-      // }
-
-      const tensTester = inputTens + inputUnit;
-      if (tensTester < 21) {
-        setNumbers(inputValue);
-      } else {
-        spellingPartFour = langObj[inputUnit].english;
-        spellingPartThree = langObj[inputTens + 0].english;
-        setEnglishNumber(`${spellingPartThree} ${spellingPartFour}`);
+      if (inputValueLength > 2) {
+        inputHundred = inputValue
+          .toString()
+          .substring(inputValueLength - 2, inputValueLength - 3);
       }
+
+      const tensChecker = Number(inputTens + inputUnit);
+
+      if (tensChecker < 21) {
+        spellingPartUnit = tensChecker.toString();
+      } else {
+        spellingPartUnit = langObj[Number(inputUnit)].english;
+        spellingPartTens = langObj[Number(inputTens + 0)].english;
+      }
+
+      if (inputHundred > 0) {
+        spellingPartHundred =
+          langObj[Number(inputHundred)].english + " Hundred and";
+      }
+
+      setEnglishNumber(
+        `${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
+      );
     }
+
+    // resetValues();
   };
 
   return (

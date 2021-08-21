@@ -396,8 +396,8 @@
 
 export const langObj = {
   0: { english: "Zero", hausa: "sifili", yoruba: "òdo" },
-  1: { english: "one", hausa: "daya", yoruba: "ọ̀kan" },
-  2: { english: "two", hausa: "biyu", yoruba: "èjì " },
+  1: { english: "One", hausa: "daya", yoruba: "ọ̀kan" },
+  2: { english: "Two", hausa: "biyu", yoruba: "èjì " },
   3: { english: "Three", hausa: "uku", yoruba: "ẹ̀ta" },
   4: { english: "Four", hausa: "hudu", yoruba: "ẹ̀rin " },
   5: { english: "Five", hausa: "biyar", yoruba: "àrún " },
