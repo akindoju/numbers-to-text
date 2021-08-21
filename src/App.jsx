@@ -188,6 +188,7 @@ function App() {
       if (inputHundred > 0) {
         spellingPartHundred =
           langObj[Number(inputHundred)].english + " Hundred and";
+        console.log(inputUnit);
       }
 
       if (inputThousand > 0) {
@@ -200,15 +201,20 @@ function App() {
 
         if (tenThousandChecker < 21) {
           spellingPartTenThousand =
-            langObj[tenThousandChecker].english + " Thousand,";
+            langObj[tenThousandChecker].english + " Thousand";
           spellingPartThousand = "";
         } else {
-          spellingPartTenThousand =
-            langObj[Number(inputTenThousand + 0)].english + " Thousand";
+          if (Number(inputThousand < 1)) {
+            spellingPartTenThousand =
+              langObj[Number(inputTenThousand + 0)].english + " Thousand";
+          } else {
+            spellingPartTenThousand =
+              langObj[Number(inputTenThousand + 0)].english;
+          }
         }
       }
 
-      if (Number(inputUnit) === 0) {
+      if (Number(inputUnit) < 1 && Number(inputTens) < 1) {
         spellingPartUnit = "";
       }
 
