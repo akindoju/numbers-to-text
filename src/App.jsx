@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { langObj } from "./arrays";
 import { Howl, Howler } from "howler";
 import "./App.scss";
@@ -33,23 +33,15 @@ function App() {
   const [hausaNumber, setHausaNumber] = useState("");
   const [yorubaNumber, setYorubaNumber] = useState("");
 
-  // const [spellingPartUnit, setSpellingPartUnit] = useState("");
-  // const [spellingPartTens, setSpellingPartTens] = useState("");
-  // const [spellingPartHundred, setSpellingPartHundred] = useState("");
-  // const [spellingPartThousand, setSpellingPartThousand] = useState("");
-  // const [inputUnit, setInputUnit] = useState("");
-  // const [inputTens, setInputTens] = useState("");
-  // const [inputHundred, setInputHundred] = useState("");
-  // const [inputThousand, setInputThousand] = useState("");
-
   //inputValue was converted to number on change, so convert to string to length
   const inputValueLength = inputValue.toString().length;
-  let inputUnit;
-  let inputTens;
-  let inputHundred;
-  let spellingPartUnit;
-  let spellingPartTens;
-  let spellingPartHundred;
+
+  let inputUnit = "";
+  let inputTens = "";
+  let inputHundred = "";
+  let spellingPartUnit = "";
+  let spellingPartTens = "";
+  let spellingPartHundred = "";
   // const inputThousand = inputValue
   //   .toString()
   //   .substring(inputValueLength - 3, inputValueLength - 4);
@@ -152,29 +144,6 @@ function App() {
     input.select();
   };
 
-  // const spellNumbers = (target) => {
-  //   console.log(target);
-  //   if (target <= 20) {
-  //     setEnglishNumber(langObj[target].english);
-  //   } else {
-
-  //     if (tensTester < 21) {
-  //       setSpellingPartUnit(langObj[tensTester].english);
-  //     } else {
-  //       setSpellingPartUnit(langObj[inputUnit].english);
-  //       setSpellingPartTens(langObj[inputTens + 0].english);
-  //     }
-
-  //     if (inputHundred > 0) {
-  //       setSpellingPartHundred(`${langObj[inputHundred].english} Hundred and`);
-  //     }
-  //   }
-
-  //   setEnglishNumber(
-  //     `${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
-  //   );
-  // };
-
   const spellNumbers = (target) => {
     if (target <= 20) {
       setEnglishNumber(langObj[target].english);
@@ -196,7 +165,7 @@ function App() {
       const tensChecker = Number(inputTens + inputUnit);
 
       if (tensChecker < 21) {
-        spellingPartUnit = tensChecker.toString();
+        spellingPartUnit = langObj[tensChecker].english;
       } else {
         spellingPartUnit = langObj[Number(inputUnit)].english;
         spellingPartTens = langObj[Number(inputTens + 0)].english;
