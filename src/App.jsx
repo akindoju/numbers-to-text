@@ -232,11 +232,17 @@ function App() {
         } else
           spellingPartHundredThousand =
             langObj[Number(inputHundredThousand)].english + " Hundred and";
+
+        if (spellingPartThousand === "" && spellingPartTenThousand === "") {
+          spellingPartThousand = "Thousand";
+        }
       }
 
       if (spellingPartUnit === "Zero") {
         spellingPartUnit = "";
       }
+
+      console.log(spellingPartThousand);
 
       setEnglishNumber(
         `${spellingPartHundredThousand} ${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
