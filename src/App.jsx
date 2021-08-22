@@ -178,7 +178,7 @@ function App() {
           .substring(inputValueLength - 4, inputValueLength - 5);
       }
 
-      if (inputValueLength > 4) {
+      if (inputValueLength > 5) {
         inputHundredThousand = inputValue
           .toString()
           .substring(inputValueLength - 5, inputValueLength - 6);
@@ -225,21 +225,21 @@ function App() {
         }
       }
 
-      // if (inputHundredThousand > 0) {
-      //   spellingPartHundredThousand =
-      //     langObj[Number(inputHundredThousand)].english + " Hundred Thousand";
-      // }
-
-      // if (Number(inputUnit) < 1 && tensChecker > 21) {
-      //   spellingPartUnit = "";
-      // }
+      if (inputHundredThousand > 0) {
+        if (Number(inputTenThousand) < 1 && Number(inputThousand) < 1) {
+          spellingPartHundredThousand =
+            langObj[Number(inputHundredThousand)].english + " Hundred";
+        } else
+          spellingPartHundredThousand =
+            langObj[Number(inputHundredThousand)].english + " Hundred and";
+      }
 
       if (spellingPartUnit === "Zero") {
         spellingPartUnit = "";
       }
 
       setEnglishNumber(
-        ` ${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
+        `${spellingPartHundredThousand} ${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
       );
     }
   };
