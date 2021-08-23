@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { langObj } from "./arrays";
-import { Howl, Howler } from "howler";
+import { Howl, Howler } from "howler"; //library for playing sounds
 import "./App.scss";
 
+//imported sounds
 import one from "./Sounds/one.wav";
 import two from "./Sounds/two.wav";
 import three from "./Sounds/three.wav";
@@ -36,6 +37,7 @@ function App() {
   //inputValue was converted to number on change, so convert to string to length
   const inputValueLength = inputValue.toString().length;
 
+  //using "let" to avoid asynchronous behaviour of setting state
   let inputUnit = "";
   let inputTens = "";
   let inputHundred = "";
@@ -50,45 +52,40 @@ function App() {
   let spellingPartTenThousand = "";
   let spellingPartHundredThousand = "";
 
-  // useEffect(() => {
-  //   if (
-  //     inputValue.length < 1 ||
-  //     isNaN(inputValue) ||
-  //     inputValue > 100 ||
-  //     inputValue < 0
-  //   ) {
-  //     setIsBtnDisabled(true);
-  //   } else {
-  //     setIsBtnDisabled(false);
-  //   }
-  // }, [inputValue]);
+  //to prevent asynchronous behaviour
+  useEffect(() => {
+    if (
+      inputValue.length < 1 ||
+      isNaN(inputValue) ||
+      inputValue > 1000000 ||
+      inputValue < 0
+    ) {
+      setIsBtnDisabled(true);
+    } else {
+      setIsBtnDisabled(false);
+    }
+  }, [inputValue]);
 
   const checkingInputError = (target) => {
     if (isNaN(target)) {
+      setInputValue("");
       setInputError(true);
-      selectText();
-      // setIsBtnDisabled(true);
+      setIsBtnDisabled(true);
     } else {
       setInputError(false);
-      // setIsBtnDisabled(false);
+      setIsBtnDisabled(false);
     }
   };
 
-  // const setNumbers = (input) => {
-  //   setEnglishNumber(langObj[input].english);
-  //   setHausaNumber(langObj[input].hausa);
-  //   setYorubaNumber(langObj[input].yoruba);
-  // };
-
-  // const numberLimit = (input) => {
-  //   if (input > 100 || input < 0) {
-  //     setLimitError(true);
-  //     setIsBtnDisabled(true);
-  //   } else {
-  //     setLimitError(false);
-  //     setIsBtnDisabled(false);
-  //   }
-  // };
+  const numberLimit = (input) => {
+    if (input > 1000000 || input < 0) {
+      setLimitError(true);
+      setIsBtnDisabled(true);
+    } else {
+      setLimitError(false);
+      setIsBtnDisabled(false);
+    }
+  };
 
   const playSound = (source) => {
     const sound = new Howl({ src: [source] });
@@ -150,8 +147,10 @@ function App() {
 
   const spellNumbers = (target) => {
     if (target <= 20) {
+      //if inputValue  <= 20 because those are entirely unique
       setEnglishNumber(langObj[target].english);
     } else {
+      //getting the place numbers
       inputUnit = inputValue
         .toString()
         .substring(inputValueLength, inputValueLength - 1);
@@ -195,6 +194,7 @@ function App() {
 
       if (inputHundred > 0) {
         if (Number(inputTens) < 1 && Number(inputUnit) < 1) {
+          // if tens and unit are 0s
           spellingPartHundred =
             langObj[Number(inputHundred)].english + " Hundred";
         } else
@@ -247,6 +247,8 @@ function App() {
       setEnglishNumber(
         `${spellingPartHundredThousand} ${spellingPartTenThousand} ${spellingPartThousand} ${spellingPartHundred} ${spellingPartTens} ${spellingPartUnit}`
       );
+      // setHausaNumber(langObj[target].hausa);
+      // setYorubaNumber(langObj[target].yoruba);
     }
   };
 
@@ -260,28 +262,25 @@ function App() {
             value={inputValue}
             onChange={({ target }) => {
               setInputValue(Number(target.value.trim()));
-              // checkInputLength(target.value);
-              // numberLimit(target.value);
+              numberLimit(target.value);
               checkingInputError(target.value);
-              // setInputError(false);
             }}
             autoFocus
-            placeholder="Enter a number between 1 - 100"
+            placeholder="Enter a number between 0 - 999999"
           />
 
           <button
-            // className={
-            //   isBtnDisabled
-            //     ? "header__components__btn active"
-            //     : "header__components__btn"
-            // }
-            className="header__components__btn"
+            className={
+              isBtnDisabled
+                ? "header__components__btn active"
+                : "header__components__btn"
+            }
             onClick={(event) => {
               event.preventDefault();
               spellNumbers(inputValue);
               selectText();
             }}
-            // disabled={isBtnDisabled}
+            disabled={isBtnDisabled}
           >
             Go
           </button>
